@@ -1,6 +1,6 @@
 pipeline{
-    agent{label 'worker'}
-    option{
+    agent any
+    options {
         buildDiscarder(logRotator(numToKeepStr: '15'))
         disableConcurrentBuilds()
         retry(3)
@@ -13,12 +13,12 @@ pipeline{
     stages{
         stage("Docker login and push"){
             steps{
-                sh "docker login -u<username> -p <password>"
+                sh "docker login -u debayan0904 -p Iteng0904#"
                 sh '''
                     cd vote
-                    docker build -t debayan0904/vote:$(BUILD_NUMBER) .
+                    docker build -t debayan0904/vote:v${BUILD_NUMBER} .
                     '''
-                sh "docker push debayan0904/vote:$(BUILD_NUMBER)"
+                sh "docker push debayan0904/vote:v${BUILD_NUMBER}"
             }
         }
         stage("deploy"){
